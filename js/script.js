@@ -48,3 +48,44 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+const projectsContainer = document.querySelector('.projects-grid');
+const originalProjects = [...document.querySelectorAll('.project-card')].map(card => ({
+    element: card,
+    title: card.querySelector('h3').textContent.toLowerCase()
+}));
+
+const searchContainer = document.createElement('div');
+searchContainer.className = 'search-container';
+searchContainer.innerHTML = `
+    <input type="text" 
+           id="project-search" 
+           placeholder="Search projects by title...">
+`;
+projectsContainer.parentNode.insertBefore(searchContainer, projectsContainer);
+
+const searchInput = document.getElementById('project-search');
+searchInput.addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+
+    originalProjects.forEach(project => {
+        const matches = project.title.includes(searchTerm);
+        project.element.style.display = matches ? 'block' : 'none';
+    });
+
+    let noResultsMsg = document.getElementById('no-results');
+    const visibleProjects = originalProjects.filter(p => p.element.style.display !== 'none');
+
+    if (visibleProjects.length === 0) {
+        if (!noResultsMsg) {
+            noResultsMsg = document.createElement('p');
+            noResultsMsg.id = 'no-results';
+            noResultsMsg.className = 'no-results';
+            noResultsMsg.textContent = 'No projects found.';
+            projectsContainer.parentNode.insertBefore(noResultsMsg, projectsContainer.nextSibling);
+        }
+        noResultsMsg.style.display = 'block';
+    } else if (noResultsMsg) {
+        noResultsMsg.style.display = 'none';
+    }
+});
