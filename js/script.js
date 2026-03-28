@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('nav a');
-    
+
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -10,9 +10,49 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+
+    const themeToggle = document.createElement('button');
+    themeToggle.className = 'theme-toggle';
+    themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+    themeToggle.setAttribute('aria-label', 'Toggle theme');
+
+    const navLinksContainer = document.querySelector('.nav-links');
+    if (navLinksContainer) {
+        const themeLi = document.createElement('li');
+        themeLi.appendChild(themeToggle);
+        navLinksContainer.appendChild(themeLi);
+    }
+
+    themeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-theme');
+        const isDark = document.body.classList.contains('dark-theme');
+        themeToggle.textContent = isDark ? '☀️' : '🌙';
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        showToast(`${isDark ? 'Dark' : 'Light'} mode activated!`, 'success');
+    });
+
+    function showToast(message, type) {
+        const existingToast = document.querySelector('.toast-message');
+        if (existingToast) existingToast.remove();
+
+        const toast = document.createElement('div');
+        toast.className = `toast-message toast-${type}`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
     const tagline = document.querySelector('.tagline');
     const hour = new Date().getHours();
-    
+
     if (hour < 12) {
         tagline.textContent = 'Good Morning! Building creative web solutions';
     } else if (hour < 18) {
@@ -23,20 +63,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const contactForm = document.getElementById('contact-form');
     const formMessage = document.getElementById('form-message');
-    
+
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        
+
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const message = document.getElementById('message').value;
-        
+
         if (name && email && message) {
             formMessage.textContent = `Thanks ${name}! I'll get back to you soon.`;
             formMessage.style.backgroundColor = '#d4edda';
             formMessage.style.color = '#155724';
             contactForm.reset();
-            
+
             setTimeout(() => {
                 formMessage.textContent = '';
                 formMessage.style.backgroundColor = 'transparent';
