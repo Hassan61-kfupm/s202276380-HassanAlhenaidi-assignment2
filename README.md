@@ -15,4 +15,4 @@ Simple portfolio with About, Projects, and Contact sections.
 - Hover animations
 
 ## AI Use
-AI tools used to assist with development. Details in [ai-usage-report.md](ai-usage-report.md)
+AI tools used to assist with development. Details in ai-usage-report.md
