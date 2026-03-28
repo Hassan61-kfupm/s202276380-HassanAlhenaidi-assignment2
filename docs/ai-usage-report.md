@@ -12,7 +12,7 @@
 | **Theme Toggle** | localStorage logic, dark mode CSS | Fixed contrast issues, added toast feedback |
 | **Hover Effects** | Transform animations, overlay effects | Removed link styles, adjusted timing |
 | **Toast Notifications** | Slide animation, auto-dismiss | Added success/error types |
-| **Dark Mode Colors** | Initial color palette | Improved readability, fixed `#2c3e50` visibility |
+| **Dark Mode Colors** | Initial color palette | Improved readability, fixed colors visibility |
 
 ---
 
