@@ -64,29 +64,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const contactForm = document.getElementById('contact-form');
     const formMessage = document.getElementById('form-message');
 
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
 
-        if (name && email && message) {
+            if (!name || !email || !message) {
+                formMessage.textContent = 'Please fill in all fields.';
+                formMessage.className = 'msg-error';
+                setTimeout(() => {
+                    formMessage.textContent = '';
+                    formMessage.className = '';
+                }, 3000);
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                formMessage.textContent = 'Please enter a valid email address.';
+                formMessage.className = 'msg-error';
+                setTimeout(() => {
+                    formMessage.textContent = '';
+                    formMessage.className = '';
+                }, 3000);
+                return;
+            }
+
             formMessage.textContent = `Thanks ${name}! I'll get back to you soon.`;
-            formMessage.style.backgroundColor = '#d4edda';
-            formMessage.style.color = '#155724';
+            formMessage.className = 'msg-success';
             contactForm.reset();
 
             setTimeout(() => {
                 formMessage.textContent = '';
-                formMessage.style.backgroundColor = 'transparent';
+                formMessage.className = '';
             }, 3000);
-        } else {
-            formMessage.textContent = 'Please fill in all fields.';
-            formMessage.style.backgroundColor = '#f8d7da';
-            formMessage.style.color = '#721c24';
-        }
-    });
+        });
+    }
 });
 
 

@@ -471,3 +471,22 @@ footer p:hover {
 body.dark-theme footer p:hover {
     color: #60a5fa;
 }
+
+
+.msg-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.msg-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 1rem;
+}
