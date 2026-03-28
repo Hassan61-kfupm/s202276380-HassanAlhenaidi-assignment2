@@ -49,27 +49,35 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+
 const projectsContainer = document.querySelector('.projects-grid');
 const originalProjects = [...document.querySelectorAll('.project-card')].map(card => ({
     element: card,
-    title: card.querySelector('h3').textContent.toLowerCase()
+    title: card.querySelector('h3').textContent.toLowerCase(),
+    description: card.querySelector('p').textContent.toLowerCase()
 }));
 
-const searchContainer = document.createElement('div');
-searchContainer.className = 'search-container';
+let searchContainer = document.querySelector('.search-container');
+if (!searchContainer) {
+    searchContainer = document.createElement('div');
+    searchContainer.className = 'search-container';
+    projectsContainer.parentNode.insertBefore(searchContainer, projectsContainer);
+}
+
 searchContainer.innerHTML = `
     <input type="text" 
            id="project-search" 
-           placeholder="Search projects by title...">
+           placeholder="Search projects">
 `;
-projectsContainer.parentNode.insertBefore(searchContainer, projectsContainer);
 
 const searchInput = document.getElementById('project-search');
 searchInput.addEventListener('input', function(e) {
     const searchTerm = e.target.value.toLowerCase();
 
     originalProjects.forEach(project => {
-        const matches = project.title.includes(searchTerm);
+        const matches = project.title.includes(searchTerm) ||
+            project.description.includes(searchTerm);
         project.element.style.display = matches ? 'block' : 'none';
     });
 
@@ -81,7 +89,7 @@ searchInput.addEventListener('input', function(e) {
             noResultsMsg = document.createElement('p');
             noResultsMsg.id = 'no-results';
             noResultsMsg.className = 'no-results';
-            noResultsMsg.textContent = 'No projects found.';
+            noResultsMsg.textContent = 'No projects found matching your search.';
             projectsContainer.parentNode.insertBefore(noResultsMsg, projectsContainer.nextSibling);
         }
         noResultsMsg.style.display = 'block';

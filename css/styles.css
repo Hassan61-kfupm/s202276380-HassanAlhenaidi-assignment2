@@ -201,3 +201,28 @@ footer {
         font-size: 1.8rem;
     }
 }
+
+.search-container {
+    margin-bottom: 2rem;
+}
+
+
+#project-search {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+#project-search:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
